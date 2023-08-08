@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import com.accenture.tigital.libraries.enums.ErrorScope;
+import com.accenture.tigital.libraries.exceptions.RestException;
 import com.accenture.tigital.libraries.typings.UserInput;
 import com.accenture.tigital.models.User;
 import com.accenture.tigital.repositories.UserRepository;
@@ -25,6 +28,12 @@ public class UserService {
     }
 
     public User create(UserInput userInput) {
+        User existingUser = userRepository.findByUsername(userInput.getUsername());
+
+        if(existingUser != null) {
+            throw new RestException("Username is already taken.", 400, ErrorScope.USER);
+        }
+
         User user = new User(userInput.getUsername(), userInput.getPassword(), userInput.getRole());
         return userRepository.saveAndFlush(user);
     }
