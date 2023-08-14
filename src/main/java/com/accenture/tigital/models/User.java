@@ -7,10 +7,13 @@ import com.accenture.tigital.libraries.implementations.Argon2;
 import com.accenture.tigital.libraries.interfaces.IPasswordEncrypter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 
@@ -106,4 +109,7 @@ public class User {
         IPasswordEncrypter passwordEncoder = new Argon2();
         return passwordEncoder.isPasswordMatch(inputPassword, this.password);
     }
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Profile profile;
 }
