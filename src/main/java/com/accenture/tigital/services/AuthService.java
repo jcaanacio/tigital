@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.accenture.tigital.libraries.enums.ErrorScope;
 import com.accenture.tigital.libraries.exceptions.RestException;
 import com.accenture.tigital.libraries.implementations.JwtTokenization;
+import com.accenture.tigital.libraries.typings.SignInResponse;
 import com.accenture.tigital.libraries.typings.TokenizationPayload;
 import com.accenture.tigital.libraries.typings.UserInput;
 import com.accenture.tigital.models.User;
@@ -19,7 +20,7 @@ public class AuthService {
     @Autowired
     private JwtTokenization jwtTokenization;
 
-    public String sign(UserInput userInput) {
+    public SignInResponse sign(UserInput userInput) {
         User user = userRepository.findByUsername(userInput.getUsername());
 
         if (user == null) {
@@ -34,8 +35,8 @@ public class AuthService {
         }
 
         TokenizationPayload payload = new TokenizationPayload(user.getUserId(), user.getUsername(), user.getUserRole());
-
-        return this.jwtTokenization.sign(payload);
+        SignInResponse response = new SignInResponse(this.jwtTokenization.sign(payload), user.getUserId());
+        return response;
     }
 
     public String refresh(String token) {
