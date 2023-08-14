@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.tigital.libraries.decorators.BasicAuth;
 import com.accenture.tigital.libraries.decorators.BearerAuth;
 import com.accenture.tigital.libraries.enums.UserRole;
+import com.accenture.tigital.libraries.typings.SignInResponse;
 import com.accenture.tigital.libraries.typings.TokenResponse;
 import com.accenture.tigital.libraries.typings.UserInput;
 import com.accenture.tigital.models.User;
@@ -31,9 +32,9 @@ public class AuthControler {
     @BasicAuth
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
-    public TokenResponse sign(HttpServletRequest request){
+    public SignInResponse sign(HttpServletRequest request){
         UserInput userInput = (UserInput) request.getAttribute("requestBody");
-        TokenResponse reponse = new TokenResponse(authService.sign(userInput));
+        SignInResponse reponse = authService.sign(userInput);
         return reponse;
     }
 
