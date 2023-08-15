@@ -1,5 +1,6 @@
 package com.accenture.tigital.services;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.accenture.tigital.libraries.enums.ErrorScope;
 import com.accenture.tigital.libraries.exceptions.RestException;
@@ -55,7 +57,56 @@ public class ProfileService {
         return profileRepository.findById(id).orElse(null);
     }
 
-    public void delete(Long id) {
-        profileRepository.deleteById(id);
+    public Profile getByUserId(Long userId) {
+        return profileRepository.findByUserUserId(userId).orElse(null);
+    }
+
+    @Transactional
+    public void delete(Long userId, Long profileId) {
+        Profile profile = profileRepository.findByUserUserId(userId).orElse(null);
+
+        if(profile == null) {
+            throw new RestException("Profile not found.", 404, ErrorScope.CLIENT);
+        }
+
+        if (profile.getProfileId() != profileId) {
+            throw new RestException("Profile id mismatched.", 404, ErrorScope.CLIENT);
+        }
+
+        profileRepository.deleteById(profile.getProfileId());
+    }
+
+    public Profile update(Long userId, Long profileId, ProfileInput profileInput){
+        Profile profile = profileRepository.findByUserUserId(userId).orElse(null);
+
+        if(profile == null) {
+            throw new RestException("Profile not found.", 404, ErrorScope.CLIENT);
+        }
+
+        if (profile.getProfileId() != profileId) {
+            throw new RestException("Profile id mismatched.", 404, ErrorScope.CLIENT);
+        }
+
+        updateNonNullFields(profileInput, profile);
+        return profileRepository.saveAndFlush(profile);
+    }
+
+    private void updateNonNullFields(Object source, Object target) {
+        Field[] fields = source.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                Object value = field.get(source);
+
+                if (value != null) {
+                    Field targetField = target.getClass().getDeclaredField(field.getName());
+                    targetField.setAccessible(true);
+                    targetField.set(target, value);
+                }
+            } catch (Exception e) {
+                // Handle exceptions
+            }
+        }
     }
 }
