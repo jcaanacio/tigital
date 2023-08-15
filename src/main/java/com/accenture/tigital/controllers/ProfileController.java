@@ -2,6 +2,8 @@ package com.accenture.tigital.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,18 @@ public class ProfileController {
     @ResponseStatus(HttpStatus.CREATED)
     public Profile create(@PathVariable Long userId, @RequestBody ProfileInput profileInput){
         return profileService.create(userId,profileInput);
+    }
+
+    @BearerAuth
+    @GetMapping("/{userId}/profile")
+    public Profile get(@PathVariable Long userId){
+        return profileService.getByUserId(userId);
+    }
+
+    @BearerAuth
+    @DeleteMapping("/{userId}/profile/{profileId}")
+    public void delete(@PathVariable Long userId,@PathVariable Long profileId){
+        profileService.delete(userId, profileId);
     }
 
 }

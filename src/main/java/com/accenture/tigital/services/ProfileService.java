@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.accenture.tigital.libraries.enums.ErrorScope;
 import com.accenture.tigital.libraries.exceptions.RestException;
@@ -55,7 +56,22 @@ public class ProfileService {
         return profileRepository.findById(id).orElse(null);
     }
 
-    public void delete(Long id) {
-        profileRepository.deleteById(id);
+    public Profile getByUserId(Long userId) {
+        return profileRepository.findByUserUserId(userId).orElse(null);
+    }
+
+    @Transactional
+    public void delete(Long userId, Long profileId) {
+        Profile profile = profileRepository.findByUserUserId(userId).orElse(null);
+
+        if(profile == null) {
+            throw new RestException("Profile not found.", 404, ErrorScope.CLIENT);
+        }
+
+        if (profile.getProfileId() != profileId) {
+            throw new RestException("Profile id mismatched.", 404, ErrorScope.CLIENT);
+        }
+
+        profileRepository.deleteById(profile.getProfileId());
     }
 }
