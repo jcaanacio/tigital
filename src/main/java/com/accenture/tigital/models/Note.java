@@ -21,5 +21,33 @@ public class Note {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Constructors, getters, setters, and other methods
+    public Note(User user, String subject, String content) {
+        this.user = user;
+        this.subject = subject;
+        this.content = content;
+    }
+
+    public Long getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(Long noteId) {
+        this.noteId = noteId;
+    }
+
+    public String getSubject() {
+        return this.subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getContent() {
+        return this.content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
