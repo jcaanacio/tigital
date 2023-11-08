@@ -10,7 +10,7 @@ public class NoteInput {
     }
 
     public String getSubject() {
-        return subject;
+        return this.subject;
     }
 
     public void setSubject(String subject) {
@@ -18,7 +18,7 @@ public class NoteInput {
     }
 
     public String getContent() {
-        return getContent;
+        return this.content;
     }
 
     public void setContent(String content) {
