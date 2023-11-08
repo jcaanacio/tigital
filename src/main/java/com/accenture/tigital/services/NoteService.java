@@ -15,6 +15,7 @@ import com.accenture.tigital.libraries.exceptions.RestException;
 import com.accenture.tigital.libraries.typings.NoteInput;
 import com.accenture.tigital.models.Profile;
 import com.accenture.tigital.models.Note;
+import com.accenture.tigital.models.User;
 import com.accenture.tigital.repositories.NoteRepository;
 import com.accenture.tigital.repositories.UserRepository;
 
