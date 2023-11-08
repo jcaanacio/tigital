@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
-import javax.persistence.JoinColumn;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Note {
