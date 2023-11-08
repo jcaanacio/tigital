@@ -2,6 +2,7 @@ package com.accenture.tigital.models;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import com.accenture.tigital.libraries.enums.UserRole;
 import com.accenture.tigital.libraries.implementations.Argon2;
 import com.accenture.tigital.libraries.interfaces.IPasswordEncrypter;
@@ -115,5 +116,5 @@ public class User {
     private Profile profile;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Notes> notes;
+    private List<Note> notes;
 }
