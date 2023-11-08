@@ -62,7 +62,7 @@ public class NoteService extends AbstractService {
             throw new RestException("Note id mismatched.", 404, ErrorScope.CLIENT);
         }
 
-        this.updateNonNullFields(profileInput, profile);
-        return noteRepository.saveAndFlush(profile);
+        this.updateNonNullFields(noteInput, note);
+        return noteRepository.saveAndFlush(note);
     }
 }
