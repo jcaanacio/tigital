@@ -37,3 +37,6 @@ CREATE TABLE notes (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+ALTER TABLE notes
+DROP CONSTRAINT IF EXISTS unique_user_id;
