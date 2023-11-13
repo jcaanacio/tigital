@@ -39,4 +39,4 @@ CREATE TABLE notes (
 );
 
 ALTER TABLE notes
-DROP CONSTRAINT IF EXISTS unique_user_id;
+DROP CONSTRAINT IF EXISTS notes_user_id_key;
