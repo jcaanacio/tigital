@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/your-api-endpoint")
-public class YourController {
+public class DebugController {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public YourController(JdbcTemplate jdbcTemplate) {
+    public DebugController(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
