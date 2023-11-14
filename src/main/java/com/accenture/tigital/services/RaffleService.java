@@ -19,7 +19,7 @@ import com.accenture.tigital.repositories.UserRepository;
 import com.accenture.tigital.repositories.RaffleRepository;
 
 @Service
-public class RaffleSerice extends AbstractService {
+public class RaffleService extends AbstractService {
     @Autowired
     private UserRepository userRepository;
 

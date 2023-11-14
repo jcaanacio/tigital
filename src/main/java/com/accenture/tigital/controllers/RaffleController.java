@@ -33,13 +33,13 @@ public class RaffleController {
 
     @BearerAuth
     @GetMapping("")
-    public Note get(@PathVariable Long userId){
+    public Raffle get(@PathVariable Long userId){
         return raffleService.getByUserId(userId);
     }
 
     @BearerAuth
     @PutMapping("/{raffleId}")
-    public Note update(@PathVariable Long userId, @PathVariable Long raffleId, @RequestBody RaffleInput raffleInput){
+    public Raffle update(@PathVariable Long userId, @PathVariable Long raffleId, @RequestBody RaffleInput raffleInput){
         return raffleService.update(userId, raffleId, raffleInput);
     }
 }
