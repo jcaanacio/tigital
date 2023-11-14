@@ -28,7 +28,7 @@ public class RaffleController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Raffle create(@PathVariable Long userId, @RequestBody RaffleInput raffleInput){
-        return raffleService.create(userId, noteInput);
+        return raffleService.create(userId, raffleInput);
     }
 
     @BearerAuth
@@ -39,7 +39,7 @@ public class RaffleController {
 
     @BearerAuth
     @PutMapping("/{raffleId}")
-    public Note update(@PathVariable Long userId, @PathVariable Long raffleId, @RequestBody NoteInput noteInput){
-        return raffleService.update(userId, raffleId, noteInput);
+    public Note update(@PathVariable Long userId, @PathVariable Long raffleId, @RequestBody RaffleInput raffleInput){
+        return raffleService.update(userId, raffleId, raffleInput);
     }
 }

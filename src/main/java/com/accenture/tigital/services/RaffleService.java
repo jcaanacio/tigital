@@ -16,6 +16,7 @@ import com.accenture.tigital.models.Profile;
 import com.accenture.tigital.models.Raffle;
 import com.accenture.tigital.models.User;
 import com.accenture.tigital.repositories.UserRepository;
+import com.accenture.tigital.repositories.RaffleRepository;
 
 @Service
 public class RaffleSerice extends AbstractService {
@@ -42,7 +43,7 @@ public class RaffleSerice extends AbstractService {
         }
 
         Raffle raffle = new Raffle(user, raffleInput.getCategory());
-        return raffleRepository.saveAndFlush(note);
+        return raffleRepository.saveAndFlush(raffle);
     }
 
 
@@ -54,15 +55,15 @@ public class RaffleSerice extends AbstractService {
         Raffle raffle = raffleRepository.findByUserUserId(userId).orElse(null);
 
         if(raffle == null) {
-            throw new RestException("Note not found.", 404, ErrorScope.CLIENT);
+            throw new RestException("Raffle not found.", 404, ErrorScope.CLIENT);
         }
 
         if(raffle.getRaffleId() != raffleId) {
             throw new RestException("Raffle id mismatched.", 404, ErrorScope.CLIENT);
         }
 
-        this.updateNonNullFields(raffleInput, note);
-        return raffleRepository.saveAndFlush(note);
+        this.updateNonNullFields(raffleInput, raffle);
+        return raffleRepository.saveAndFlush(raffle);
     }
 
     public void delete(Long raffleId) {
